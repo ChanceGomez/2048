@@ -11,6 +11,7 @@ function love.conf(t)
 	t.window.display = 1
 	t.window.resizable = true
 	t.window.msaa = 0
+	t.window.icon = "Assets/Sprites/icon.png"
 	
 	t.window.vsync = 0  -- 0 = off, 1 = on
 end
