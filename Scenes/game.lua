@@ -71,30 +71,30 @@ local function checkDirection(grid,direction)
                     --Check to see if no movements possible
                     local aboveTile = grid.tiles[row-1][col]
                     if aboveTile.number and aboveTile.number ~= tile.number then
-                        goto continue
-                    end
-                    --Check above it to see if there is a tile
-                    for aboveRow = row - 1, 1, -1 do
-                        local aboveTile = grid.tiles[aboveRow][col]
-                        --Check to see if Above tile has the same number as our current tile
-                        if aboveTile.number and aboveTile.number == tile.number then
-                            --If these requirements are true then merge the two tiles
-                            mergeNumbers(tile,aboveTile)
-                            break
-                        --Catches if tile still has number but doesn't have same number
-                        --and make sure that it isn't directly below it
-                        elseif aboveTile.number and row > aboveRow + 1 then
-                            local behindTile = grid.tiles[aboveRow+1][col]
-                            moveNumber(tile,behindTile)
-                            break
-                        --Check to see if the top tile is empty if so take it
-                        elseif aboveRow == 1 and aboveTile.number == nil then
-                            local topTile = grid.tiles[1][col] 
-                            moveNumber(tile,topTile)
-                            break
+                        
+                    else
+                        --Check above it to see if there is a tile
+                        for aboveRow = row - 1, 1, -1 do
+                            local aboveTile = grid.tiles[aboveRow][col]
+                            --Check to see if Above tile has the same number as our current tile
+                            if aboveTile.number and aboveTile.number == tile.number then
+                                --If these requirements are true then merge the two tiles
+                                mergeNumbers(tile,aboveTile)
+                                break
+                            --Catches if tile still has number but doesn't have same number
+                            --and make sure that it isn't directly below it
+                            elseif aboveTile.number and row > aboveRow + 1 then
+                                local behindTile = grid.tiles[aboveRow+1][col]
+                                moveNumber(tile,behindTile)
+                                break
+                            --Check to see if the top tile is empty if so take it
+                            elseif aboveRow == 1 and aboveTile.number == nil then
+                                local topTile = grid.tiles[1][col] 
+                                moveNumber(tile,topTile)
+                                break
+                            end
                         end
                     end
-                    ::continue::
                 end
             end
         end
@@ -109,30 +109,30 @@ local function checkDirection(grid,direction)
                     --Check to see if no movements possible
                     local aboveTile = grid.tiles[row+1][col]
                     if aboveTile.number and aboveTile.number ~= tile.number then
-                        goto continue
-                    end
-                    --Check above it to see if there is a tile
-                    for aboveRow = row + 1, grid.rows do
-                        local nextTile = grid.tiles[aboveRow][col]
-                        --Check to see if Above tile has the same number as our current tile
-                        if nextTile.number and nextTile.number == tile.number then
-                            --If these requirements are true then merge the two tiles
-                            mergeNumbers(tile,nextTile)
-                            break
-                        --Catches if tile still has number but doesn't have same number
-                        --and make sure that it isn't directly below it
-                        elseif nextTile.number and row < aboveRow - 1 then
-                            local behindTile = grid.tiles[aboveRow-1][col]
-                            moveNumber(tile,behindTile)
-                            break
-                        --Check to see if the top tile is empty if so take it
-                        elseif aboveRow == grid.rows and nextTile.number == nil then
-                            local topTile = grid.tiles[grid.rows][col] 
-                            moveNumber(tile,topTile)
-                            break
+                    
+                    else
+                        --Check above it to see if there is a tile
+                        for aboveRow = row + 1, grid.rows do
+                            local nextTile = grid.tiles[aboveRow][col]
+                            --Check to see if Above tile has the same number as our current tile
+                            if nextTile.number and nextTile.number == tile.number then
+                                --If these requirements are true then merge the two tiles
+                                mergeNumbers(tile,nextTile)
+                                break
+                            --Catches if tile still has number but doesn't have same number
+                            --and make sure that it isn't directly below it
+                            elseif nextTile.number and row < aboveRow - 1 then
+                                local behindTile = grid.tiles[aboveRow-1][col]
+                                moveNumber(tile,behindTile)
+                                break
+                            --Check to see if the top tile is empty if so take it
+                            elseif aboveRow == grid.rows and nextTile.number == nil then
+                                local topTile = grid.tiles[grid.rows][col] 
+                                moveNumber(tile,topTile)
+                                break
+                            end
                         end
                     end
-                    ::continue::
                 end
             end
         end
@@ -148,30 +148,30 @@ local function checkDirection(grid,direction)
                     --Check to see if no movements possible
                     local nextTile = grid.tiles[row][col-1]
                     if nextTile.number and nextTile.number ~= tile.number then
-                        goto continue
-                    end
-                    --Check above it to see if there is a tile
-                    for nextCol = col - 1, 1, -1 do
-                        local nextTile = grid.tiles[row][nextCol]
-                        --Check to see if Above tile has the same number as our current tile
-                        if nextTile.number and nextTile.number == tile.number then
-                            --If these requirements are true then merge the two tiles
-                            mergeNumbers(tile,nextTile)
-                            break
-                        --Catches if tile still has number but doesn't have same number
-                        --and make sure that it isn't directly below it
-                        elseif nextTile.number and col > nextCol + 1 then
-                            local behindTile = grid.tiles[row][nextCol+1]
-                            moveNumber(tile,behindTile)
-                            break
-                        --Check to see if the top tile is empty if so take it
-                        elseif nextCol == 1 and nextTile.number == nil then
-                            local topTile = grid.tiles[row][1] 
-                            moveNumber(tile,topTile)
-                            break
+                        
+                    else
+                        --Check above it to see if there is a tile
+                        for nextCol = col - 1, 1, -1 do
+                            local nextTile = grid.tiles[row][nextCol]
+                            --Check to see if Above tile has the same number as our current tile
+                            if nextTile.number and nextTile.number == tile.number then
+                                --If these requirements are true then merge the two tiles
+                                mergeNumbers(tile,nextTile)
+                                break
+                            --Catches if tile still has number but doesn't have same number
+                            --and make sure that it isn't directly below it
+                            elseif nextTile.number and col > nextCol + 1 then
+                                local behindTile = grid.tiles[row][nextCol+1]
+                                moveNumber(tile,behindTile)
+                                break
+                            --Check to see if the top tile is empty if so take it
+                            elseif nextCol == 1 and nextTile.number == nil then
+                                local topTile = grid.tiles[row][1] 
+                                moveNumber(tile,topTile)
+                                break
+                            end
                         end
                     end
-                    ::continue::
                 end
             end
         end
@@ -187,30 +187,30 @@ local function checkDirection(grid,direction)
                     --Check to see if no movements possible
                     local nextTile = grid.tiles[row][col+1]
                     if nextTile.number and nextTile.number ~= tile.number then
-                        goto continue
-                    end
-                    --Check above it to see if there is a tile
-                    for nextCol = col + 1, grid.cols do
-                        local nextTile = grid.tiles[row][nextCol]
-                        --Check to see if Above tile has the same number as our current tile
-                        if nextTile.number and nextTile.number == tile.number then
-                            --If these requirements are true then merge the two tiles
-                            mergeNumbers(tile,nextTile)
-                            break
-                        --Catches if tile still has number but doesn't have same number
-                        --and make sure that it isn't directly below it
-                        elseif nextTile.number and col < nextCol - 1 then
-                            local behindTile = grid.tiles[row][nextCol-1]
-                            moveNumber(tile,behindTile)
-                            break
-                        --Check to see if the top tile is empty if so take it
-                        elseif nextCol == grid.cols and nextTile.number == nil then
-                            local topTile = grid.tiles[row][grid.cols] 
-                            moveNumber(tile,topTile)
-                            break
+                        
+                    else
+                        --Check above it to see if there is a tile
+                        for nextCol = col + 1, grid.cols do
+                            local nextTile = grid.tiles[row][nextCol]
+                            --Check to see if Above tile has the same number as our current tile
+                            if nextTile.number and nextTile.number == tile.number then
+                                --If these requirements are true then merge the two tiles
+                                mergeNumbers(tile,nextTile)
+                                break
+                            --Catches if tile still has number but doesn't have same number
+                            --and make sure that it isn't directly below it
+                            elseif nextTile.number and col < nextCol - 1 then
+                                local behindTile = grid.tiles[row][nextCol-1]
+                                moveNumber(tile,behindTile)
+                                break
+                            --Check to see if the top tile is empty if so take it
+                            elseif nextCol == grid.cols and nextTile.number == nil then
+                                local topTile = grid.tiles[row][grid.cols] 
+                                moveNumber(tile,topTile)
+                                break
+                            end
                         end
                     end
-                    ::continue::
                 end
             end
         end
