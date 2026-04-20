@@ -241,7 +241,7 @@ function game:load(rows,cols)
     self.seed = os.time()
     self.generator = love.math.newRandomGenerator(self.seed)
 
-    self.grid = Grid:new(calcaultePos(rows or 5,cols or 5))
+    self.grid = Grid:new(calcaultePos(rows or 4,cols or 4))
 
     --Change background color
     love.graphics.setBackgroundColor(.3,.3,.3,1)

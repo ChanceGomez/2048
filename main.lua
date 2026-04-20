@@ -45,7 +45,7 @@ Scenes = {
         end,
     },
 }
-Scene = "settings"
+Scene = "game"
 
 function love.load()
     --graphical fidelity
