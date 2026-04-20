@@ -1,9 +1,9 @@
-local settings = {
+local settingscene = {
     buttons = {},
     sliders = {},
 }
 
-function settings:load()
+function settingscene:load()
     self.buttons.fullscreen = Button.new({
         x = 10,
         y = 40,
@@ -28,29 +28,30 @@ function settings:load()
             format = "center",
         },
         clicked = function()
-            --Check to see if any settings are different and need to restart game
-            if game.grid.rows ~= settings.sliders.rows.slider.value or 
-                game.grid.cols ~= settings.sliders.cols.slider.value then
+            --Check to see if any settingscenecene are different and need to restart game
+            if game.grid.rows ~= settingscene.sliders.rows.slider.value or 
+                game.grid.cols ~= settingscene.sliders.cols.slider.value then
 
-                game:load(settings.sliders.rows.slider.value,settings.sliders.cols.slider.value)
+                game:load(settingscene.sliders.rows.slider.value,settingscene.sliders.cols.slider.value)
             end
             Scene = "game"
         end
     })
-
-    self.buttons.quit = Button.new({
-        x = 640-64-10,
-        y = 44,
-        width = 64,
-        height = 24,
-        description = {
-            text = "Quit",
-            format = "center",
-        },
-        clicked = function()
-            love.event.quit()
-        end
-    })
+    if not settings.isWeb then 
+        self.buttons.quit = Button.new({
+            x = 640-64-10,
+            y = 44,
+            width = 64,
+            height = 24,
+            description = {
+                text = "Quit",
+                format = "center",
+            },
+            clicked = function()
+                love.event.quit()
+            end
+        })
+    end
 
     local maxRows,maxCols = 10,10
 
@@ -91,7 +92,7 @@ function settings:load()
     })
 end
 
-function settings:update()
+function settingscene:update()
     for i, button in pairs(self.buttons) do
         button:update()
     end
@@ -102,9 +103,9 @@ function settings:update()
     end
 end
 
-function settings:draw()
+function settingscene:draw()
     love.graphics.setFont(dogica_16)
-    love.graphics.print("Settings",4,4)
+    love.graphics.print("settingscene",4,4)
 
     --draw buttons
     for i, button in pairs(self.buttons) do
@@ -124,4 +125,4 @@ function settings:draw()
     end
 end
 
-return settings
+return settingscene

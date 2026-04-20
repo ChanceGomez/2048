@@ -257,7 +257,7 @@ function game:load(rows,cols)
             format = "center",
         },
         clicked = function()
-            Scene = "settings"
+            Scene = "settingscene"
         end,
     })
 

@@ -1,7 +1,11 @@
 
+settings = {
+    isWeb = true
+}
+
 --Scenes
 game = require("Scenes.game")
-settings = require("Scenes.settings")
+settingscene = require("Scenes.settingscene")
 
 --Libraries
 window = require("Libraries.window")
@@ -19,8 +23,6 @@ window.calculateScale()
 Grid = require("Scripts.Classes.Grid")
 Tile = require("Scripts.Classes.Tile")
 
-
-
 Scenes = {
     game = {
         load = function()
@@ -33,15 +35,15 @@ Scenes = {
             game:draw()
         end,
     },
-    settings = {
+    settingscene = {
         load = function()
-            settings:load()
+            settingscene:load()
         end,
         update = function(dt)
-            settings:update(dt)
+            settingscene:update(dt)
         end,
         draw = function()
-            settings:draw()
+            settingscene:draw()
         end,
     },
 }
@@ -68,7 +70,7 @@ function love.load()
 end
 
 function love.update(dt)
-    if love.keyboard.isDown("q") then
+    if not settings.isWeb and love.keyboard.isDown("q") then
         love.event.quit()
     end
     Scenes[Scene].update(dt)
