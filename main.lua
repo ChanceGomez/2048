@@ -49,7 +49,6 @@ Scene = "game"
 
 function love.load()
     --graphical fidelity
-    window.fullscreen()
     love.window.setVSync(0)
     love.graphics.setDefaultFilter("nearest","nearest")
 
