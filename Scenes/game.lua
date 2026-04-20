@@ -232,6 +232,7 @@ local function calcaultePos(rows,cols)
     x = (window.GameWidth/2) - (width/2)
     y = (window.GameHeight/2) - (height/2)
 
+    print(size)
 
     return x,y,size,rows,cols
 end
@@ -242,8 +243,8 @@ function game:load(rows,cols)
 
     self.grid = Grid:new(calcaultePos(rows or 4,cols or 4))
 
-    --Change background color
-    love.graphics.setBackgroundColor(.3,.3,.3,1)
+
+
 
     --Load settings button
     self.buttons.settings = Button.new({
@@ -254,11 +255,13 @@ function game:load(rows,cols)
         description = {
             text = "Settings",
             format = "center",
+            font = dogica_16,
         },
         clicked = function()
             Scene = "settingscene"
         end,
     })
+
 
     --Initial populating
     populate(self.grid)

@@ -5,13 +5,14 @@ local settingscene = {
 
 function settingscene:load()
     self.buttons.fullscreen = Button.new({
-        x = 10,
+        x = 5,
         y = 40,
-        width = 128,
+        width = 160,
         height = 32,
         description = {
             text = "Fullscreen",
             format = "center",
+            font = dogica_16,
         },
         clicked = function()
             window.fullscreen()
@@ -26,6 +27,7 @@ function settingscene:load()
         description = {
             text = "Back",
             format = "center",
+            font = dogica_16,
         },
         clicked = function()
             --Check to see if any settingscenecene are different and need to restart game
@@ -46,6 +48,7 @@ function settingscene:load()
             description = {
                 text = "Quit",
                 format = "center",
+                font = dogica_16,
             },
             clicked = function()
                 love.event.quit()

@@ -1,7 +1,7 @@
 
 settings = {
     isWeb = true,
-    debug = false,
+    debug = true,
 }
 
 if settings.debug then
@@ -20,6 +20,10 @@ Button = require("Libraries.Button")
 Slider = require("Libraries.Slider")
 customtext = require("Libraries.customtext")
 infopanel = require("Libraries.infopanel")
+array = require("Libraries.array")
+palette = require("Libraries.palette")
+
+currentPalette = "Calico_Kitty"
 
 window.GameWidth,window.GameHeight = 640,360
 window.calculateScale()
@@ -54,6 +58,37 @@ Scenes = {
 }
 Scene = "game"
 
+function paletteChange(name)
+    local name = name or "default"
+
+    currentPalette = name
+    local palette = palette[currentPalette]
+
+    --Change background colors
+    love.graphics.setBackgroundColor(palette[1])
+
+    --Go through every tile
+    if game.grid then
+        for row = 1, game.grid.rows do 
+            for col = 1, game.grid.cols do 
+                local tile = game.grid.tiles[row][col]
+                tile.colors.empty = palette[4]
+                tile.colors.occupied = palette[2]
+            end
+        end
+    end
+
+    --Change buttons in game
+    for i, button in pairs(game.buttons) do
+        button.colors.normal = palette[2]
+    end
+
+    --Change buttons in settings
+    for i, button in pairs(settingscene.buttons) do
+        button.colors.normal = palette[2]
+    end
+end
+
 function love.load()
     --graphical fidelity
     love.window.setVSync(0)
@@ -61,6 +96,7 @@ function love.load()
 
     --load font
     dogica_8 = love.graphics.newFont("Assets/Fonts/dogica/TTF/dogica.ttf",8)
+    dogica_12 = love.graphics.newFont("Assets/Fonts/dogica/TTF/dogica.ttf",12)
     dogica_16 = love.graphics.newFont("Assets/Fonts/dogica/TTF/dogica.ttf",16)
 
     --Canvas
@@ -72,6 +108,9 @@ function love.load()
     end
 
     customtext:load()
+
+
+    paletteChange("Calico_Kitty")
 end
 
 function love.update(dt)

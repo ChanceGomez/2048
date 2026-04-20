@@ -60,9 +60,10 @@ function Tile:update()
         self.color = "occupied"
         self.textColor = "occupied"
 
+        --[[
         local backgroundColor = {intensity/number,intensity/number,intensity/number,1}
         self.colors.occupied = backgroundColor
-        self.textColors.occupied = getContrastColor(backgroundColor)
+        self.textColors.occupied = getContrastColor(backgroundColor)]]
     end
 
     if collision.rect(self) then
@@ -70,9 +71,51 @@ function Tile:update()
     end
 end
 
-function Tile:draw()
+local function getTileColor(value)
+    local maxValue = 2048
+    local t = math.log(value, 2) / math.log(maxValue, 2)  -- 0 to 1
     
-    love.graphics.setColor(self.colors[self.color])
+    local hue = 28 + t * 50
+    local s = 0.32
+    local l = 0.42
+    
+    -- HSL to RGB conversion
+    local function hslToRgb(h, s, l)
+        h = h / 360
+        local r, g, b
+        if s == 0 then
+            r, g, b = l, l, l
+        else
+            local function hue2rgb(p, q, t)
+                if t < 0 then t = t + 1 end
+                if t > 1 then t = t - 1 end
+                if t < 1/6 then return p + (q-p) * 6 * t end
+                if t < 1/2 then return q end
+                if t < 2/3 then return p + (q-p) * (2/3-t) * 6 end
+                return p
+            end
+            local q = l < 0.5 and l*(1+s) or l+s-l*s
+            local p = 2*l - q
+            r = hue2rgb(p, q, h + 1/3)
+            g = hue2rgb(p, q, h)
+            b = hue2rgb(p, q, h - 1/3)
+        end
+        return {r, g, b,1}
+    end
+    
+    return hslToRgb(hue, s, l)
+end
+
+function Tile:draw()
+    local color = self.colors[self.color]
+
+    if self.number then
+        local number = self.number
+
+        color = getTileColor(number)
+    end
+
+    love.graphics.setColor(color)
     love.graphics.rectangle("fill",self.x,self.y,self.width,self.height)
 
     --outline
@@ -81,9 +124,21 @@ function Tile:draw()
 
     --Number
     if self.number then
-        love.graphics.setFont(dogica_8)
-        love.graphics.setColor(self.textColors[self.textColor])
-        love.graphics.print(self.number,math.floor(self.x+2),math.floor(self.y+2))
+        local font = dogica_16
+        local text = tostring(self.number)
+        local width,height = customtext:getDimensions(text,font)
+        if width >= self.width or height >= self.height then
+            font = dogica_8
+            width,height = customtext:getDimensions(text,font)
+        end
+
+        local x,y = self.x + ((self.width - width)/2),self.y + ((self.height - height)/2)
+
+
+        love.graphics.setFont(font)
+        love.graphics.setColor(getContrastColor(color))
+        love.graphics.print(self.number,x,y)
+        
     end
 end
 

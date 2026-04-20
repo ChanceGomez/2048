@@ -26,6 +26,9 @@ function  window.fullscreen(bool)
     --Lower the window so user can move it around and resize
     if _bool == false then
         love.window.setPosition(0,32)
+        if settings.isWeb then
+            window.Scale = 1
+        end
     end
 end
 
