@@ -1,7 +1,12 @@
 
 settings = {
-    isWeb = true
+    isWeb = true,
+    debug = false,
 }
+
+if settings.debug then
+    love._openConsole()
+end
 
 --Scenes
 game = require("Scenes.game")

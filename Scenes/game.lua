@@ -225,14 +225,13 @@ local function calcaultePos(rows,cols)
     local maxWidth,maxHeight = 400,300
 
     size = math.floor(maxHeight/rows)
-    print(size,maxHeight,rows)
+    
     local width = size*cols
     local height = size*rows
     
     x = (window.GameWidth/2) - (width/2)
     y = (window.GameHeight/2) - (height/2)
 
-    print(x,y,size,cols,rows,width,height)
 
     return x,y,size,rows,cols
 end

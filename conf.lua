@@ -2,7 +2,6 @@
 
 function love.conf(t)
 
-	t.console = true
 	t.window.fullscreen = false
 	t.window.width = 640
 	t.window.title = "2048"
