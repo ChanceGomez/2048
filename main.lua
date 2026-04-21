@@ -1,6 +1,6 @@
 
 settings = {
-    isWeb = false,
+    isWeb = true,
     debug = false,
 }
 

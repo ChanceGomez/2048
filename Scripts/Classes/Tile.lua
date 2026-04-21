@@ -78,7 +78,7 @@ local function getTileColor(value)
     local maxValue = 2048
     local t = math.log(value, 2) / math.log(maxValue, 2)  -- 0 to 1
     
-    local hue = 28 + t * 50
+    local hue = 28 + t * 150
     local s = 0.32
     local l = 0.42
     

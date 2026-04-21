@@ -316,6 +316,7 @@ function game:load(rows,cols)
     self.endless = false
 
 
+
     --Load settings button
     self.buttons.settings = Button.new({
         x = 10,
@@ -368,6 +369,9 @@ function game:load(rows,cols)
 
     --Initial populating
     populate(self.grid,2)
+
+
+    paletteChange("Calico_Kitty")
 end
 
 local queuePopulate = false
