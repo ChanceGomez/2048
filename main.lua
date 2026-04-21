@@ -1,7 +1,7 @@
 
 settings = {
-    isWeb = true,
-    debug = true,
+    isWeb = false,
+    debug = false,
 }
 
 if settings.debug then

@@ -266,7 +266,6 @@ local function isMovePossible(grid)
     }
 
     --Check to see if the play board is full or not
-    print(game.existingTiles,grid.rows,grid.cols)
     if game.existingTiles ~= grid.rows * grid.cols then
         return true
     --If grid is full then check every tiles neighbor to see if any of them are next to
