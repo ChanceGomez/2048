@@ -224,8 +224,12 @@ function customtext:getDimensions(arg1,arg2,arg3,arg4,arg5,arg6)
         if width + font:getWidth(text) > limit then
             Return()
         end
-        width = width + font:getWidth(text .. ' ')
-        
+
+        if #words > 1 then
+            width = width + font:getWidth(text .. ' ')
+        else
+            width = width + font:getWidth(text)
+        end
         if width > maxWidth then
             maxWidth = width
         end

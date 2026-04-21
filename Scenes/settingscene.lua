@@ -64,7 +64,8 @@ function settingscene:load()
         width = 128,
         height = 8,
         description = {
-            text = "Hello"
+            text = "Hello",
+            font = dogica_16,
         },
         slider = {
             min = 2,
@@ -82,7 +83,8 @@ function settingscene:load()
         width = 128,
         height = 8,
         description = {
-            text = "Hello"
+            text = "Hello",
+            font = dogica_16,
         },
         slider = {
             min = 2,
@@ -108,7 +110,7 @@ end
 
 function settingscene:draw()
     love.graphics.setFont(dogica_16)
-    love.graphics.print("settingscene",4,4)
+    love.graphics.print("Settings",4,4)
 
     --draw buttons
     for i, button in pairs(self.buttons) do

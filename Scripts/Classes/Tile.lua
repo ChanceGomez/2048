@@ -3,7 +3,7 @@ Tile.__index = Tile
 
 hoveredTile = nil
 
-function Tile.new(row,col,x,y,width,height)
+function Tile.new(row,col,x,y,width,height,value)
     local obj = setmetatable({},Tile)
     
     obj.row = row
@@ -12,7 +12,7 @@ function Tile.new(row,col,x,y,width,height)
     obj.y = y
     obj.width = width
     obj.height = height
-    obj.number = nil
+    obj.value = value
     obj.colors = {
         empty = {.15,.20,.20,1},
         occupied = {1,1,1,1},
@@ -24,46 +24,49 @@ function Tile.new(row,col,x,y,width,height)
     obj.color = "empty"
     obj.textColor = "empty"
 
+    
+    game.existingTiles = game.existingTiles + 1
     return obj
 end
 
-local function getNegative(color)
-    local color = color or {1,1,1}
-    local negative = {}
-
-    for i = 1, 3 do
-        local c = math.min(math.max(color[i],0),1)
-        local n = 1 - c
-        table.insert(negative,n)
+function Tile:removeFromTween()
+    for i, tile in ipairs(game.grid.objectsTweening) do
+        if tile == self then
+            table.remove(game.grid.objectsTweening,i)
+        end
     end
-
-    return negative
 end
 
-local function getContrastColor(color)
-    -- Calculate perceived brightness (standard formula)
-    local luminance = (0.299 * color[1] + 0.587 * color[2] + 0.114 * color[3])
-    
-    if luminance > 127/255 then
-        return {0,0,0}       -- dark text for bright backgrounds
-    else
-        return {1,1,1}  -- light text for dark backgrounds
+function Tile:removeFromGrid()
+    game.grid.tiles[self.row][self.col].tile = nil
+end
+
+function Tile:tweenTo(tile,numberOfTilesMoving)
+    self.tweenID = #game.grid.objectsTweening + 1
+    table.insert(game.grid.objectsTweening,self)
+
+    --Calculate if movement is vertical or horizontal
+    local movement = nil
+    if self.row ~= tile.row then
+        movement = "rows"
+    elseif self.col ~= tile.col then
+        movement = "cols"
     end
+
+
+    tweenTo(self,game.tileSpeed,"linear",tile.x,tile.y,function() 
+        self:removeFromTween()
+    end)
+
+    self:removeFromGrid()
 end
 
 function Tile:update()
     self.color = "empty"
     self.textColor = "empty"
-    if self.number then 
-        local intensity = 2
-        local number = (self.number)
+    if self.value then 
         self.color = "occupied"
         self.textColor = "occupied"
-
-        --[[
-        local backgroundColor = {intensity/number,intensity/number,intensity/number,1}
-        self.colors.occupied = backgroundColor
-        self.textColors.occupied = getContrastColor(backgroundColor)]]
     end
 
     if collision.rect(self) then
@@ -109,10 +112,10 @@ end
 function Tile:draw()
     local color = self.colors[self.color]
 
-    if self.number then
-        local number = self.number
+    if self.value then
+        local value = self.value
 
-        color = getTileColor(number)
+        color = getTileColor(value)
     end
 
     love.graphics.setColor(color)
@@ -123,9 +126,9 @@ function Tile:draw()
     love.graphics.rectangle("line",self.x,self.y,self.width,self.height)
 
     --Number
-    if self.number then
+    if self.value then
         local font = dogica_16
-        local text = tostring(self.number)
+        local text = tostring(self.value)
         local width,height = customtext:getDimensions(text,font)
         if width >= self.width or height >= self.height then
             font = dogica_8
@@ -137,7 +140,7 @@ function Tile:draw()
 
         love.graphics.setFont(font)
         love.graphics.setColor(getContrastColor(color))
-        love.graphics.print(self.number,x,y)
+        love.graphics.print(self.value,x,y)
         
     end
 end

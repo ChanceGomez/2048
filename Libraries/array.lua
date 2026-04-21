@@ -155,6 +155,17 @@ function subtract(tbl1,tbl2)
   return temp
 end
 
+function getContrastColor(color)
+    -- Calculate perceived brightness (standard formula)
+    local luminance = (0.299 * color[1] + 0.587 * color[2] + 0.114 * color[3])
+    
+    if luminance > 127/255 then
+        return {0,0,0}       -- dark text for bright backgrounds
+    else
+        return {1,1,1}  -- light text for dark backgrounds
+    end
+end
+
 function scale(tbl,scaleX,scaleY)
 	--return if tbl is nil
 	if tbl == nil then print("empty table") return end

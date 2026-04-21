@@ -22,6 +22,7 @@ customtext = require("Libraries.customtext")
 infopanel = require("Libraries.infopanel")
 array = require("Libraries.array")
 palette = require("Libraries.palette")
+tween = require("Libraries.tween")
 
 currentPalette = "Calico_Kitty"
 
@@ -72,8 +73,7 @@ function paletteChange(name)
         for row = 1, game.grid.rows do 
             for col = 1, game.grid.cols do 
                 local tile = game.grid.tiles[row][col]
-                tile.colors.empty = palette[4]
-                tile.colors.occupied = palette[2]
+                tile.color = palette[4]
             end
         end
     end
@@ -98,6 +98,7 @@ function love.load()
     dogica_8 = love.graphics.newFont("Assets/Fonts/dogica/TTF/dogica.ttf",8)
     dogica_12 = love.graphics.newFont("Assets/Fonts/dogica/TTF/dogica.ttf",12)
     dogica_16 = love.graphics.newFont("Assets/Fonts/dogica/TTF/dogica.ttf",16)
+    dogica_64 = love.graphics.newFont("Assets/Fonts/dogica/TTF/dogica.ttf",64)
 
     --Canvas
     mainCanvas = love.graphics.newCanvas(window.GameWidth,window.GameHeight)
@@ -120,6 +121,7 @@ function love.update(dt)
     Scenes[Scene].update(dt)
 
     controls:update()
+    tween:update(dt)
 end
 
 function love.draw()
